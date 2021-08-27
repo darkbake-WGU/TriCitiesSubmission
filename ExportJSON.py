@@ -3,7 +3,7 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
-#In this part of the project, I am going to be exporting the .osm file to .json
+# In this part of the project, I am going to be exporting the .osm file to .json
 
 #Import statements
 import xml.etree.cElementTree as ET
@@ -99,7 +99,7 @@ def shape_element(element):
         for tag in element.iter("tag"):
             # treat child tags
             if is_street_name(tag):
-                input1 = update.name(tag.attrib['v'], mapping)
+                input1 = update_name(tag.attrib['v'], mapping)
                 node.update({"Address": {o: input1}})
             else:
                 node.update({tag.attrib['k']: tag.attrib['v']})
