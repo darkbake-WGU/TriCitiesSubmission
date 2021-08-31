@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # This is a sample Python script.
 
 # Press Shift+F10 to execute it or replace it with your code.
@@ -21,6 +22,8 @@ problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 startswithaddr = re.compile(r'\Aaddr:')
 afteraddr = re.compile(r':.+$')
 afteraddr2 = re.compile(r'[a-zA-Z+$]')
+street_type_re = re.compile(r'\S+\.?$', re.IGNORECASE)
+street_name_re = re.compile(r'.*?(?=[\wäöüß]+$)', re.IGNORECASE)
 
 # The created array stores information about the creation of the way or node.
 CREATED = ["version", "changeset", "timestamp", "user", "uid"]
@@ -40,7 +43,6 @@ mapping = {"Ave": "Avenue",
            "Dri": "Drive"
            }
 
-
 # Checks to see if the element is a street name
 def is_street_name(elem):
     return (elem.attrib['k'] == "addr:street")
@@ -48,6 +50,7 @@ def is_street_name(elem):
 
 # This function will update the street name if necessary to the correct one.
 def update_name(name, mapping):
+    firstname = ""
     m = street_type_re.search(name)
     o = street_name_re.search(name)
     if m:
@@ -100,7 +103,7 @@ def shape_element(element):
             # treat child tags
             if is_street_name(tag):
                 input1 = update_name(tag.attrib['v'], mapping)
-                node.update({"Address": {o: input1}})
+                node.update({"Address": input1})
             else:
                 node.update({tag.attrib['k']: tag.attrib['v']})
 

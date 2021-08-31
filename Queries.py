@@ -19,7 +19,7 @@ if __name__ == '__main__':
     client = MongoClient('localhost:27017')
     db = client["WGUProjects"]
     street = {'name': "Street Name"}
-    db.StreetData.insert_one(street)
+    db.StreetData2.insert_one(street)
 
     # Get the size of the data in bytes
     db.command('collstats', "StreetData2")['size']
